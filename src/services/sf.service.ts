@@ -3,7 +3,7 @@ import { Inject, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { Connection } from "jsforce";
 import { AxiosInstance } from "axios";
-import { PersistanceService } from "./persistance.service";
+import { PersistenceService } from "./persistence.service";
 import { WINSTON_MODULE_PROVIDER } from "nest-winston";
 import { Logger } from "winston";
 
@@ -61,7 +61,7 @@ export class SfService {
   constructor(
     private readonly configService: ConfigService,
     private readonly httpService: HttpService,
-    private readonly persistanceService: PersistanceService,
+    private readonly persistenceService: PersistenceService,
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
   ) {
     this.axios = this.httpService.axiosRef;
@@ -102,12 +102,12 @@ export class SfService {
       const currentDate = new Date();
       const startDate = new Date(currentDate.getTime() - this.pollMilliseconds);
       const startDateString = startDate.toISOString()
-      this.persistanceService.setLastSync(startDateString);
+      this.persistenceService.setLastSync(startDateString);
       return startDateString;
     } else {
       this.initial = false;
       return (
-        this.persistanceService.getLastSync() ||
+        this.persistenceService.getLastSync() ||
         new Date('2022-01-01').toISOString()
       );
     }

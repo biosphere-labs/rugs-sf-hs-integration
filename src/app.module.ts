@@ -5,7 +5,7 @@ import { HttpModule } from '@nestjs/axios';
 import { HsService } from './services/hs.service';
 import { SfService } from './services/sf.service';
 import { SchedulerRegistry, Interval } from '@nestjs/schedule';
-import { PersistanceService } from './services/persistance.service';
+import { PersistenceService } from './services/persistence.service';
 import { WINSTON_MODULE_PROVIDER, WinstonModule } from 'nest-winston';
 import * as winston from 'winston';
 import { Logger } from 'winston';
@@ -33,7 +33,7 @@ import { Logger } from 'winston';
       ],
     }),
   ],
-  providers: [HsService, SfService, PersistanceService],
+  providers: [HsService, SfService, PersistenceService],
 })
 export class AppModule implements OnModuleInit {
   private pollMilliseconds: number;

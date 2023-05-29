@@ -21,7 +21,7 @@ export type Storage = {
  * batch updates which require an hs_object_id
  */
 @Injectable()
-export class PersistanceService {
+export class PersistenceService {
   private storage: Storage;
   constructor(
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,

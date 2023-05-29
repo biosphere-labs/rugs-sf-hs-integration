@@ -13,7 +13,7 @@ import {
   BatchResponsePublicAssociation,
   PublicAssociation,
 } from '@hubspot/api-client/lib/codegen/crm/associations';
-import { PersistanceService } from './persistance.service';
+import { PersistenceService } from './persistence.service';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Logger } from 'winston';
 
@@ -30,7 +30,7 @@ export class HsService {
   private client: Client;
   constructor(
     private readonly configService: ConfigService,
-    private readonly persistanceService: PersistanceService,
+    private readonly persistenceService: PersistenceService,
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
   ) {
     const accessToken = this.configService.get<string>(`HS_PRIVATE_APP_KEY`);
@@ -95,7 +95,7 @@ export class HsService {
       this.logger.info(
         `HsService : createCompanyWithAssociatedContact : contactId: ${contactId}`,
       );
-      this.persistanceService.addSfHsEntry(
+      this.persistenceService.addSfHsEntry(
         company.salesforceaccountid,
         companyId,
         contactId,
@@ -144,7 +144,7 @@ export class HsService {
       const batch = this.mapContactAccountPartial(update);
       const companyBatch: CompanyUpdateBatch = {
         inputs: batch.map((i) => {
-          const id = this.persistanceService.getHsIds(
+          const id = this.persistenceService.getHsIds(
             i.company.salesforceaccountid,
           ).companyHsObjectId;
           this.logger.debug(
@@ -168,7 +168,7 @@ export class HsService {
       );
       const contactBatch: ContactUpdateBatch = {
         inputs: batch.map((i) => {
-          const id = this.persistanceService.getHsIds(
+          const id = this.persistenceService.getHsIds(
             i.company.salesforceaccountid,
           ).contactHsObjectId;
           this.logger.debug(
